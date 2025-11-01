@@ -1,0 +1,72 @@
+.nav{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.navUL{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    align-items: center;
+    box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: black;
+    background-color: white;
+
+}
+
+.a{
+    text-decoration: none;
+    color: black;
+}
+
+.h3{
+    font-size: 17pt;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.loc{
+    font-size: 12pt;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight:500;
+}
+
+.input{
+    font-size: 10pt;
+    padding: 3px 8px;
+    border-radius: 30px;
+    outline: none;
+    border: none;
+    width: 87%;
+}
+
+.inputLabel{
+    position: absolute;
+    height: 100%;
+    right: 12px;
+    top: 15%;
+    color: white;
+    font-weight: bold;
+    font-size: 13pt;
+}
+
+.inputGroup{
+    position: relative;
+    display: flex;
+    justify-content: left;
+    background-color: var(--color-primary);
+    padding: 2px;
+    border-radius: 30px;
+    width: 250px;
+}
+
+.phone{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13pt;
+}

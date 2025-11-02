@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import "./frontend/styles/variables.css";
 import "./frontend/styles/global.css";
 import NavBar from "./frontend/components/navbar/page";
+import Footer from "./frontend/components/footer/page";
 import {LocationProvider} from "./frontend/Context/LocationContext";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         <main>
           {children}
         </main>
+        <Footer />
         </LocationProvider>
       </body>
     </html>

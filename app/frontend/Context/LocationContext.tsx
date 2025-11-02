@@ -1,18 +1,20 @@
 'use client'
-import {createContext, useState, useEffect, ReactNode} from 'react';
+import { useState, useEffect, ReactNode, createContext } from 'react';
 
-interface Location{
-    name: string;
+
+interface Location {
+    city?: string;
+    country?: string;
     latitude: number;
     longitude: number;
 }
 
-interface LocationContextType{
+interface LocationContextType {
     location: Location | null;
     loading: boolean;
 }
 
-interface Props{
+interface Props {
     children: ReactNode;
 }
 
@@ -21,46 +23,46 @@ export const LocationContext = createContext<LocationContextType>({
     loading: false,
 });
 
-export const LocationProvider = ({children}: Props) => {
+export const LocationProvider = ({ children }: Props) => {
     const [location, setLocation] = useState<Location | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        if(!navigator.geolocation){
-            setLocation({name: 'Não suportado', latitude: 0, longitude: 0});
+        if (!navigator.geolocation) {
+            setLocation({ city: 'Não suportado', country:'Desconhecido', latitude: 0, longitude: 0 });
             setLoading(false);
         }
 
         navigator.geolocation.getCurrentPosition(
-            async(position) => {
-            const {latitude, longitude} = position.coords;
+            async (position) => {
+                const { latitude, longitude } = position.coords;
 
-            try{
-                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${latitude}&longitude=${longitude}&language=pt`)
-                const data = await res.json();
+                try {
+                    const res = await fetch(`/backend/api/location?lat=${latitude}&lon=${longitude}`);
+                    const data = await res.json();
 
-                if(data.results.length > 0){
-                    const city = data.results[0].name;
-                    setLocation({name: city, latitude, longitude});
+                    setLocation({
+                        city: data.city || 'Desconhecida',
+                        country: data.country || 'Desconhecido',
+                        latitude,
+                        longitude,
+                    });
+                } catch (error) {
+                    console.error('Erro ao obter o nome da localização:', error);
+                } finally {
+                    setLoading(false);
                 }
-
-                setLocation({name: 'Desconhecido', latitude, longitude});
-            }catch(error){
-                console.error('Erro ao obter o nome da localização:', error);
-            }finally{
-                setLoading(false);
-            }
             },
             (error) => {
                 console.error('Erro ao obter a localização:', error);
-                setLocation({name: 'Desconhecida', latitude: 0, longitude: 0});
+                setLocation({ city: 'Desconhecida', country: 'Desconhecido',latitude: 0, longitude: 0 });
                 setLoading(false);
             }
         );
-    }, []); 
+    }, []);
 
-    return(
-        <LocationContext.Provider value={{location, loading}}>
+    return (
+        <LocationContext.Provider value={{ location, loading }}>
             {children}
         </LocationContext.Provider>
     );

@@ -20,7 +20,7 @@
 
 .a{
     text-decoration: none;
-    color: black;
+    color: var(--color-primary);
 }
 
 .h3{
@@ -33,6 +33,9 @@
     font-size: 12pt;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight:500;
+    display: flex;
+    align-items: center;
+    gap: 3px;
 }
 
 .input{
